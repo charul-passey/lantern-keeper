@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 const LanternKeeperGame = dynamic(() => import("@/components/LanternKeeperGame"), { ssr: false });
