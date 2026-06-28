@@ -47,7 +47,7 @@ export default function LanternKeeperGame() {
     if (!mount) return;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     mount.appendChild(renderer.domElement);
@@ -218,7 +218,7 @@ export default function LanternKeeperGame() {
     mount.addEventListener("touchstart", (e) => { lastMX = e.touches[0].clientX; });
     mount.addEventListener("touchmove", (e) => { cameraYaw += (e.touches[0].clientX - lastMX) * 0.005; lastMX = e.touches[0].clientX; });
 
-    const onResize = () => { camera.aspect = mount.clientWidth / mount.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(mount.clientWidth, mount.clientHeight); };
+    const onResize = () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
     window.addEventListener("resize", onResize);
 
     let lastTime = performance.now();
@@ -315,5 +315,5 @@ export default function LanternKeeperGame() {
     };
   }, []);
 
-  return <div ref={mountRef} className="w-full h-full" />;
+  return <div ref={mountRef} style={{ width: "100%", height: "100%", display: "block" }} />;
 }
