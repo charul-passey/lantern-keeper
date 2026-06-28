@@ -1,13 +1,5 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const LanternKeeperGame = dynamic(() => import("@/components/LanternKeeperGame"), { ssr: false });
+import ClientGame from "@/components/ClientGame";
 
 export default function Home() {
-  return (
-    <div className="w-screen h-screen overflow-hidden bg-[#0a0a1a]">
-      <LanternKeeperGame />
-    </div>
-  );
+  return <ClientGame />;
 }
