@@ -1,16 +1,24 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const LanternKeeperGame = dynamic(() => import("./LanternKeeperGame"), {
-  ssr: false,
-  loading: () => <div style={{ width: "100%", height: "100%", background: "#08101a" }} />,
-});
+import { useEffect, useRef } from "react";
 
 export default function ClientGame() {
+  const mountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+    if (!mount) return;
+    let cleanup: (() => void) | undefined;
+    import("../lib/game").then(({ startGame }) => {
+      if (mountRef.current) cleanup = startGame(mountRef.current);
+    });
+    return () => cleanup?.();
+  }, []);
+
   return (
-    <div style={{ width: "100vw", height: "100vh", overflow: "hidden", background: "#08101a" }}>
-      <LanternKeeperGame />
-    </div>
+    <div
+      ref={mountRef}
+      style={{ width: "100vw", height: "100vh", overflow: "hidden", background: "#08101a", display: "block" }}
+    />
   );
 }
